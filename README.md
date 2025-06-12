@@ -1,54 +1,34 @@
-# React + TypeScript + Vite
+# React UI Kit (Vite + Storybook)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+이 프로젝트는 다양한 서비스에서 재사용 가능한 **공통 UI 컴포넌트(Kit)**를 개발하고, Storybook을 통해 문서화 및 테스트를 용이하게 하기 위해 만들어졌습니다.
 
-Currently, two official plugins are available:
+- 일관된 UI/UX 제공
+- 컴포넌트 단위 개발 및 문서화
+- 빠른 프론트엔드 개발 환경 구축
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 개발 서버 실행 방법
 
-## Expanding the ESLint configuration
+### 1. Vite 개발 서버 (UI Kit Playground)
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+```bash
+pnpm dev
+# 또는
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+- 접속: [http://localhost:5173](http://localhost:5173)
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### 2. Storybook 서버 (컴포넌트 문서/테스트)
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+```bash
+pnpm storybook
+# 또는
+npm run storybook
 ```
+
+- 접속: [http://localhost:6006](http://localhost:6006)
+
+## 참고
+
+- 환경변수(`.env.development`)에서 `VITE_STORYBOOK_URL`을 설정하면 Storybook 링크가 자동으로 연결됩니다.
+- 컴포넌트 추가/수정 시 `src/data/ui-components.ts`와 Storybook 스토리 파일을 함께 관리하세요.
