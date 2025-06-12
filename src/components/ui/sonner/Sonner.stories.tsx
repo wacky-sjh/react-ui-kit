@@ -13,7 +13,7 @@ export default meta;
 
 type Story = StoryObj<typeof Toaster>;
 
-export const Demo: Story = {
+export const Default: Story = {
   render: () => (
     <>
       <Toaster />
