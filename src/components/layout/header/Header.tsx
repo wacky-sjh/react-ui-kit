@@ -1,40 +1,79 @@
-import { useState, useEffect } from "react";
-import Logo from "./Logo";
+import { useState } from "react";
+import Logo from "../../common/Logo";
+import { Menu, X } from "lucide-react";
 import Navigation from "./Navigation";
 import LanguageSelect from "./LanguageSelect";
+import { navItems, type NavItem } from "@/constants/navigation";
+import { languages, type Language } from "@/constants/languages";
+import { Button } from "@/components/ui/button/button";
+import { Drawer, DrawerContent, DrawerClose, DrawerTrigger } from "@/components/ui/drawer/drawer";
+import { useHashNavigation } from "@/hooks/useHashNavigation";
 
-const navItems = [
-  { label: "About Us", href: "#about" },
-  { label: "Products", href: "#products" },
-  { label: "News", href: "#news" },
-  { label: "Contact Us", href: "#contact" },
-];
+type HeaderProps = {
+  currentHash: string;
+  navItems: NavItem[];
+  lang: string;
+  setLang: (lang: string) => void;
+  languages: Language[];
+};
 
-const languages = [
-  { code: "ko", label: "한국어" },
-  { code: "en", label: "English" },
-  { code: "fr", label: "Français" },
-];
+function DesktopHeader(props: HeaderProps) {
+  const { currentHash, navItems, lang, setLang, languages } = props;
+  return (
+    <div className="max-w-7xl mx-auto items-center justify-between h-14 px-4 gap-4 hidden md:flex">
+      <Logo />
+      <Navigation current={currentHash} navItems={navItems} />
+      <LanguageSelect value={lang} onValueChange={setLang} languages={languages} />
+    </div>
+  );
+}
+
+function MobileHeader(props: HeaderProps & { currentPage: string }) {
+  const { currentHash, navItems, lang, setLang, languages, currentPage } = props;
+  return (
+    <Drawer>
+      <div className="flex md:hidden items-center justify-between h-14 px-4">
+        <Logo size="sm" />
+        <span className="font-bold text-base">{currentPage}</span>
+        <DrawerTrigger asChild>
+          <Button size="icon" variant="ghost" aria-label="메뉴 열기">
+            <Menu className="size-5" />
+          </Button>
+        </DrawerTrigger>
+      </div>
+      <DrawerContent className="fixed inset-0 z-50 bg-white flex flex-col p-6 gap-6">
+        <div className="flex justify-end">
+          <DrawerClose asChild>
+            <Button size="icon" variant="ghost" aria-label="메뉴 닫기">
+              <X className="size-5" />
+            </Button>
+          </DrawerClose>
+        </div>
+        <Navigation current={currentHash} navItems={navItems} />
+        <LanguageSelect value={lang} onValueChange={setLang} languages={languages} />
+      </DrawerContent>
+    </Drawer>
+  );
+}
 
 export function Header() {
   const [lang, setLang] = useState(languages[0].code);
-  const [current, setCurrent] = useState<string>("#about");
+  const currentHash = useHashNavigation("#about");
 
-  useEffect(() => {
-    const hash = window.location.hash || "#about";
-    setCurrent(hash);
-    const onHashChange = () => setCurrent(window.location.hash || "#about");
-    window.addEventListener("hashchange", onHashChange);
-    return () => window.removeEventListener("hashchange", onHashChange);
-  }, []);
+  const currentPage = navItems.find((item) => item.href === currentHash)?.label || "";
+
+  const headerProps: HeaderProps = {
+    currentHash,
+    navItems,
+    lang,
+    setLang,
+    languages,
+  };
 
   return (
     <header className="w-full bg-gray-50">
-      <div className="max-w-7xl mx-auto flex items-center justify-between h-14 px-4 gap-4">
-        <Logo />
-        <Navigation current={current} navItems={navItems} />
-        <LanguageSelect value={lang} onValueChange={setLang} languages={languages} />
-      </div>
+      <DesktopHeader {...headerProps} />
+      <MobileHeader {...headerProps} currentPage={currentPage} />
     </header>
   );
 }

@@ -1,4 +1,4 @@
-import { uiComponents } from "./data/ui-components";
+import { uiComponents } from "./constants/ui-components";
 import { getStoryUrl } from "./lib/utils";
 
 function App() {
