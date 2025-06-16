@@ -1,12 +1,12 @@
 import { useState } from "react";
 import Logo from "../../common/Logo";
-import { Menu, X } from "lucide-react";
+import { Menu } from "lucide-react";
 import Navigation from "./Navigation";
 import LanguageSelect from "./LanguageSelect";
 import { navItems, type NavItem } from "@/constants/navigation";
 import { languages, type Language } from "@/constants/languages";
 import { Button } from "@/components/ui/button/button";
-import { Drawer, DrawerContent, DrawerClose, DrawerTrigger } from "@/components/ui/drawer/drawer";
+import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer/drawer";
 import { useHashNavigation } from "@/hooks/useHashNavigation";
 
 type HeaderProps = {
@@ -41,14 +41,7 @@ function MobileHeader(props: HeaderProps & { currentPage: string }) {
           </Button>
         </DrawerTrigger>
       </div>
-      <DrawerContent className="fixed inset-0 z-50 bg-white flex flex-col p-6 gap-6">
-        <div className="flex justify-end">
-          <DrawerClose asChild>
-            <Button size="icon" variant="ghost" aria-label="메뉴 닫기">
-              <X className="size-5" />
-            </Button>
-          </DrawerClose>
-        </div>
+      <DrawerContent className="fixed inset-0 z-50 bg-white flex flex-col px-6 gap-6">
         <Navigation current={currentHash} navItems={navItems} />
         <LanguageSelect value={lang} onValueChange={setLang} languages={languages} />
       </DrawerContent>
