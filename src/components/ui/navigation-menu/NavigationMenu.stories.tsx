@@ -21,8 +21,8 @@ export const Basic: Story = {
     <NavigationMenu>
       <NavigationMenuList>
         <NavigationMenuItem>
-          <NavigationMenuTrigger>Menu</NavigationMenuTrigger>
-          <NavigationMenuContent>
+          <NavigationMenuTrigger>Navigation Menu</NavigationMenuTrigger>
+          <NavigationMenuContent className="text-nowrap">
             <NavigationMenuLink href="#">Item 1</NavigationMenuLink>
             <NavigationMenuLink href="#">Item 2</NavigationMenuLink>
           </NavigationMenuContent>
