@@ -27,7 +27,9 @@ export const Basic: Story = {
           <DrawerTitle>Drawer Title</DrawerTitle>
           <DrawerDescription>This is a drawer description.</DrawerDescription>
         </DrawerHeader>
-        <div>Drawer content goes here.</div>
+        <div className="p-4 text-center">
+          <p>Drawer content goes here.</p>
+        </div>
       </DrawerContent>
     </Drawer>
   ),
